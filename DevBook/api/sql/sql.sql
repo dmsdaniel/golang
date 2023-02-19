@@ -36,7 +36,7 @@ CREATE TABLE publicacoes(
     FOREIGN KEY (autor_id) REFERENCES usuarios(id) ON DELETE CASCADE,
 
     curtidas int default 0,
-    criada em timestamp default current_timestamp
+    criadaEm timestamp default current_timestamp
 ) ENGINE=INNODB;
 
 
