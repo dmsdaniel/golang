@@ -37,25 +37,24 @@
 
             </div>
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
-                {{ range .}}
-
-                <div class="jumbotron">
-
-                    <h1 class="display-4">{{ .Titulo }}</h1>
-                    <p class="lead">{{ .Conteudo }}</p>
-                    <a href="#">{{ .AutorNick }} - {{ .CriadaEm}} </a>
-                    <hr class="my-4">
-                    <p>Botões</p>
-                </div>
+                {{ range .Publicacoes}}
+                    {{ if (eq .AutorID $.UsuarioID )}}
+                        {{ template "publicacao-com-permissao" .}}
+                    {{ else }}
+                        {{ template "publicacao-sem-permissao" .}}
+                    {{ end }}
                 {{ end }}
             </div>
 
 
         </div>
-        {{ template "rodape" }}
+    
 
     </div>
+    {{ template "rodape" }}
     {{ template "scripts" }}
+    <script src="/assets/js/publicacoes.js"></script>
+
 </body>
 
 </html>
