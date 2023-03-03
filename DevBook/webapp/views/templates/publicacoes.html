@@ -20,7 +20,7 @@
 {{ end }}
 
 {{ define "curtidas" }}
-    <i class="fa-solid fa-heart"></i>
+    <i class="fa-solid fa-heart curtir-publicacao"></i>
     <span> {{ .Curtidas }} curtidas </span>
 {{ end }}
 
@@ -37,10 +37,10 @@
 
 
 {{ define "publicacao-com-permissao" }}
-    <div class="jumbotron" data-publicacao-id="{{.ID}}"">
+    <div class="jumbotron" style="background-color:rgb(199, 239, 245); " data-publicacao-id="{{.ID}}"">
         {{template "cabecalho-publicacao" .}}
         <p>
-            {{ template "curtidas" . }}
+            {{ template "curtidas" .}}
             {{ template "editar" }}
             {{ template "deletar" }}
         </p>
@@ -48,10 +48,10 @@
 {{ end }}
 
 {{ define "publicacao-sem-permissao" }}
-    <div class="jumbotron" data-publicacao-id="{{.ID}}"">
+    <div class="jumbotron" style="background-color: rgb(199, 239, 245); " data-publicacao-id="{{.ID}}"">
         {{template "cabecalho-publicacao" .}}
         <p>
-            {{ template "curtidas" . }}
+            {{ template "curtidas" .}}
         </p>
     </div>
 {{ end }}

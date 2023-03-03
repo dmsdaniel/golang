@@ -12,7 +12,7 @@ type Publicacao struct {
 	Conteudo  string    `json:"conteudo,omitempty"`
 	AutorID   uint64    `json:"autorId,omitempty"`
 	AutorNick string    `json:"autorNick,omitempty"`
-	Curtidas  uint64    `json:"uint64"`
+	Curtidas  uint64    `json:"curtidas,omitempty"`
 	CriadaEm  time.Time `json:"criadaEm,omitempty"`
 }
 
