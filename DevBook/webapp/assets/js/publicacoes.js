@@ -1,6 +1,7 @@
 $('#nova-publicacao').on('submit',criarPublicacao)
 $(document).on('click', '.curtir-publicacao', curtirPublicacao);
 $(document).on('click', '.descurtir-publicacao', descurtirPublicacao);
+$('#atualizar-publicacao').on('click',atualizarPublicacao);
 function criarPublicacao(evento){
     evento.preventDefault()
     $.ajax({
@@ -67,3 +68,23 @@ function descurtirPublicacao(evento){
     
 }
 
+function atualizarPublicacao() {
+    $(this).prop('disabled', true);
+    const publicacaoId = $(this).data('publicacao-id');
+    console.log(publicacaoId);
+    $.ajax({
+        url: `/publicacoes/${publicacaoId}`,
+        method: "PUT",
+        data: {
+            titulo: $('#titulo').val(),
+            conteudo: $('#conteudo').val()
+        }
+    }).done(function() {
+        alert("Chamar api atualizacao publicacao");
+    }).fail(function() {
+        alert("Erro ao chamar api atualizacao publicacao");
+    }).always(function(){
+        $('#atualizar-publicacao').prop('disabled',false);
+    })
+
+}
