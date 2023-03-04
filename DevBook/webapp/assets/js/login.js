@@ -8,10 +8,10 @@ function fazerLogin(evento){
             email: $('#email').val(),
             senha: $('#senha').val(),
         }
-    }).done(function(){ //200 OK
+    }).done(function(){ 
         window.location = "/home";
-    }).fail(function(erro){ //4.. 5.. ERRO
-        alert("Usuário ou senha inválidos!");
+    }).fail(function(erro){ 
+        console.log(erro);
     });
 
 }

@@ -28,6 +28,7 @@ func Salvar(w http.ResponseWriter, ID, token string) error {
 		Value:    dadosCodificados,
 		Path:     "/",
 		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
 	})
 
 	return nil
