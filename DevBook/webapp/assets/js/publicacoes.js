@@ -81,7 +81,9 @@ function atualizarPublicacao() {
             conteudo: $('#conteudo').val()
         }
     }).done(function() {
-        alert("Chamar api atualizacao publicacao");
+        Swal.fire('Sucesso!', 'Publicação atualizada com sucesso!', 'success').then(function(){
+            window.location = "/home";
+        })
     }).fail(function() {
         alert("Erro ao chamar api atualizacao publicacao");
     }).always(function(){
@@ -92,18 +94,28 @@ function atualizarPublicacao() {
 
 function deletarPublicacao(evento){
     evento.preventDefault();
-    const elementoClicado = $(evento.target);
-    const publicacao = elementoClicado.closest('div');  
-    const publicacaoId = publicacao.data('publicacao-id');    
-    $.ajax({
-        url: `/publicacoes/${publicacaoId}`,
-        method: "DELETE",
-    }).done(function() {
-        publicacao.fadeOut("slow", function(){
-            $(this).remove();
-        })
-    }).fail(function() {
-        alert("Erro ao excluir publicacao");
-    });
+
+    Swal.fire({
+        title: "Atenção",
+        text: "Tem certeza que deseja excluir?",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        icon: "warning"
+    }).then(function(confirmacao) {
+        if(!confirmacao.value) return;
+        const elementoClicado = $(evento.target);
+        const publicacao = elementoClicado.closest('div');  
+        const publicacaoId = publicacao.data('publicacao-id');    
+        $.ajax({
+            url: `/publicacoes/${publicacaoId}`,
+            method: "DELETE",
+        }).done(function() {
+            publicacao.fadeOut("slow", function(){
+                $(this).remove();
+            })
+        }).fail(function() {
+            alert("Erro ao excluir publicacao");
+        });
+    })
 
 }
