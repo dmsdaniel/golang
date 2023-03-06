@@ -14,13 +14,11 @@
 {{ end }}
 
 {{ define "deletar" }}
-    <a href="/deletar" style="text-decoration: none;">
-        <i class="fa-solid fa-trash text-danger"></i>
-    </a>
+    <i class="fas fa-trash text-danger deletar-publicacao" style="cursor: pointer;"></i>
 {{ end }}
 
 {{ define "curtidas" }}
-    <i class="fa-solid fa-heart curtir-publicacao"></i>
+    <i class="fa-solid fa-heart curtir-publicacao" style="cursor: pointer;"></i>
     <span> {{ .Curtidas }} curtidas </span>
 {{ end }}
 
