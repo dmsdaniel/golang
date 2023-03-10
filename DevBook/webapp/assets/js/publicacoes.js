@@ -94,7 +94,6 @@ function atualizarPublicacao() {
 
 function deletarPublicacao(evento){
     evento.preventDefault();
-
     Swal.fire({
         title: "Atenção",
         text: "Tem certeza que deseja excluir?",
