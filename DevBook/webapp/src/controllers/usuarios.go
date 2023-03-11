@@ -133,7 +133,7 @@ func SeguirUsuario(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	url := fmt.Sprintf("%s/usuarios/%d/seguir", config.APIURL, usuarioId)
-	fmt.Println(url)
+
 	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
@@ -161,5 +161,54 @@ func CarregarPerfilDoUsuarioLogado(w http.ResponseWriter, r *http.Request) {
 	}
 
 	utils.ExecutarTemplate(w, "perfil.html", usuario)
+
+}
+
+func CarregarPerfilDeEdicaoDeUsuario(w http.ResponseWriter, r *http.Request) {
+	cookie, _ := cookies.Ler(r)
+	usuarioID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	canal := make(chan modelos.Usuario)
+	go modelos.BuscarDadosDoUsuario(canal, usuarioID, r)
+	usuario := <-canal
+
+	if usuario.ID == 0 {
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: "Erro ao buscar o usuario"})
+		return
+	}
+
+	utils.ExecutarTemplate(w, "editar-usuario.html", usuario)
+}
+
+func EditarUsuario(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	usuario, erro := json.Marshal(map[string]string{
+		"nome":  r.FormValue("nome"),
+		"email": r.FormValue("email"),
+		"nick":  r.FormValue("nick"),
+	})
+	if erro != nil {
+		respostas.JSON(w, http.StatusBadRequest, respostas.ErroAPI{Erro: erro.Error()})
+		return
+	}
+
+	cookie, _ := cookies.Ler(r)
+	usuarioID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	url := fmt.Sprintf("%s/usuarios/%d", config.APIURL, usuarioID)
+
+	fmt.Println(bytes.NewBuffer(usuario))
+
+	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPut, url, bytes.NewBuffer(usuario))
+	if erro != nil {
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
+	}
+	defer response.Body.Close()
+	if response.StatusCode >= 400 {
+		respostas.TratarStatusCodeDeErro(w, response)
+		return
+	}
+
+	respostas.JSON(w, http.StatusOK, nil)
 
 }

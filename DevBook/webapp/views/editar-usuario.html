@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevBook - Editar usuário</title>
+    <link href="/assets/css/bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    {{ template "cabecalho"}}
+    <div class="container-fluid">
+        <div class="row mt-4">
+            <div class="col-12">
+                <h3>Editar Dados</h3>
+                <form id="editar-usuario">
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Insira o seu nome"
+                            value="{{ .Nome }}" required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Nome</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Insira o seu email" 
+                        value="{{ .Email }}" required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="nick">Nome</label>
+                        <input type="text" class="form-control" id="nick" name="nick" placeholder="Insira o seu Nick name" 
+                        value="{{ .Nick }}" required="true">
+                    </div>
+                    <button type="submit" class="btn btn-info">Atualizar Dados</button>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    {{ template "rodape"}}
+    {{ template "scripts"}}
+    <script src="/assets/js/usuario.js"></script>
+
+</body>
+
+</html>
